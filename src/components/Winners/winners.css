@@ -1,0 +1,28 @@
+.container {
+    margin: 20px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .winners-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .winner-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .winner-item strong {
+    font-weight: bold;
+  }
+  
+  .winner-item p {
+    margin: 5px 0;
+  }
+  

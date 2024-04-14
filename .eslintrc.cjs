@@ -16,6 +16,7 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    'react/jsx-filename-extension': [1, { 'extensions': ['.jsx', '.tsx'] }]
+    'react/jsx-filename-extension': [1, { 'extensions': ['.jsx', '.tsx'] }],
+    'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
   },
 }

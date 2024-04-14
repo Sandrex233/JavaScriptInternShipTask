@@ -1,31 +1,24 @@
-/* eslint-disable react/react-in-jsx-scope */
-import { useState } from 'react';
+import React, { useState } from 'react';
+import Garage from './components/Garage/Garage.tsx';
+import Winners from './components/Winners/Winners.tsx';
 
-function App() {
-  const [count, setCount] = useState<number>(0);
-
-  const increaseCount = () => {
-    setCount((prevCount) => prevCount + 1);
-  };
-
-  const decreaseCount = () => {
-    setCount((prevCount) => prevCount - 1);
-  };
+const App: React.FC = () => {
+  const [view, setView] = useState<'garage' | 'winners'>('garage');
 
   return (
     <div>
-      <h1>
-        count is:
-        {count}
-      </h1>
-      <button type="button" onClick={increaseCount}>
-        increase
-      </button>
-      <button type="button" onClick={decreaseCount}>
-        decrease
-      </button>
+      <div>
+        <button type="button" onClick={() => setView('garage')}>
+          Garage
+        </button>
+        <button type="button" onClick={() => setView('winners')}>
+          Winners
+        </button>
+      </div>
+      {view === 'garage' && <Garage />}
+      {view === 'winners' && <Winners />}
     </div>
   );
-}
+};
 
 export default App;
