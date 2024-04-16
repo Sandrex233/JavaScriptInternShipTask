@@ -10,7 +10,7 @@
 
 ## ✅ Requirements to Commits and Repository
 
-- [ ] **Commit guidelines compliance:** Ensure that all commits follow the specified commit guidelines, thereby promoting a clear and consistent commit history. This includes using meaningful commit messages that accurately describe the changes made.
+- [x] **Commit guidelines compliance:** Ensure that all commits follow the specified commit guidelines, thereby promoting a clear and consistent commit history. This includes using meaningful commit messages that accurately describe the changes made.
 
 - [x] **Checklist included in README.md:** Include the project's checklist in the README.md file. Mark all implemented features to provide a clear overview of the project's completion status.
 
@@ -31,7 +31,7 @@
 
 #### Car Management (45 points)
 
-- [ ] **CRUD Operations (20 points):** Enable users to create, update, and delete cars, and display the list of cars. A car has two attributes: "name" and "color". For "delete"-operation car should be deleted from "garage" table as well as from "winners".
+- [x] **CRUD Operations (20 points):** Enable users to create, update, and delete cars, and display the list of cars. A car has two attributes: "name" and "color". For "delete"-operation car should be deleted from "garage" table as well as from "winners".
 - [x] **Color Selection (10 points):** Allow color selection from an RGB palette ([like here](https://colorspire.com/rgb-color-wheel/)), displaying the selected color on the car's image along with its name.
 - [x] **Management Buttons (5 points):** Provide buttons near each car's image for updating its attributes or deleting it.
 - [x] **Pagination (10 points):** Implement pagination for the "Garage" view, displaying 7 cars per page.
@@ -42,10 +42,10 @@
 
 ## 🚗 Car Animation (50 points)
 
-- [ ] **Engine Control Buttons (10 points):** Place start/stop engine buttons near each car's image.
-- [ ] **Start Engine Animation (20 points):** User clicks to the engine start button -> UI is waiting for car's velocity answer -> animate the car and makes another request to drive. In case api returned 500 error car animation should be stopped.
+- [x] **Engine Control Buttons (10 points):** Place start/stop engine buttons near each car's image.
+- [] **Start Engine Animation (20 points):** User clicks to the engine start button -> UI is waiting for car's velocity answer -> animate the car and makes another request to drive. In case api returned 500 error car animation should be stopped.
 - [ ] **Stop Engine Animation (10 points):** User clicks to the engine stop button -> UI is waiting for answer for stopping engine -> car returned to it's initial place.
-- [ ] **Button States (5 points):** Start engine button should be disabled in case car is already in driving mode. As well as stop engine button should be disabled when car is on it's initial place.
+- [x] **Button States (5 points):** Start engine button should be disabled in case car is already in driving mode. As well as stop engine button should be disabled when car is on it's initial place.
 - [ ] **Responsive Animation (5 points):** Ensure car animations are fluid and responsive on screens as small as 500px.
 
 ## 🏎️ Race Animation (35 points)
