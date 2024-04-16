@@ -1,5 +1,5 @@
-import generateRandomCars from '../utils/GenerateRandomCars.ts';
-import { Car, WinnerWithCar } from '../utils/GlobalInterfaces.ts';
+import generateRandomCar from '../utils/GenerateRandomCars.ts';
+import { Car, EngineResponseDTO, WinnerWithCar } from '../utils/GlobalInterfaces.ts';
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -20,7 +20,7 @@ export default async function fetchWinners(
 }
 
 export const createRandomCars = async (): Promise<Car> => {
-  const newCars = generateRandomCars();
+  const newCars = generateRandomCar();
   return fetch(`${BASE_URL}/garage`, {
     method: 'POST',
     headers: {
@@ -97,4 +97,38 @@ export const deleteCar = async (id: number): Promise<void> => {
   if (!response.ok) {
     throw new Error('Failed to delete car');
   }
+};
+
+export const startEngine = async (id: number): Promise<EngineResponseDTO> => {
+  const response = await fetch(`${BASE_URL}/engine?id=${id}&status=started`, {
+    method: 'PATCH',
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to start engine');
+  }
+
+  return response.json();
+};
+
+export const stopEngine = async (id: number): Promise<void> => {
+  const response = await fetch(`${BASE_URL}/engine?id=${id}&status=stopped`, {
+    method: 'PATCH',
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to stop engine');
+  }
+};
+
+export const switchToDriveMode = async (id: number): Promise<{ success: boolean }> => {
+  const response = await fetch(`${BASE_URL}/engine?id=${id}&status=drive`, {
+    method: 'PATCH',
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to switch to drive mode');
+  }
+
+  return response.json();
 };

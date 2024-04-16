@@ -9,6 +9,10 @@ const UpdateCarForm: React.FC<UpdateCarFormProps> = ({ onUpdateCar }) => {
   const [color, setColor] = useState<string>('');
 
   const handleUpdateClick = () => {
+    if (!name.trim() || !color.trim()) {
+      // Display an error message or handle the empty values as needed
+      return;
+    }
     onUpdateCar(name, color);
     // Reset the form after updating
     setName('');
@@ -19,11 +23,11 @@ const UpdateCarForm: React.FC<UpdateCarFormProps> = ({ onUpdateCar }) => {
     <div>
       <label htmlFor="carName">
         Name:
-        <input id="carName" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        <input id="carName" type="text" value={name} onChange={(e) => setName(e.target.value)} required />
       </label>
       <label htmlFor="carColor">
         Color:
-        <input id="carColor" type="color" value={color} onChange={(e) => setColor(e.target.value)} />
+        <input id="carColor" type="color" value={color} onChange={(e) => setColor(e.target.value)} required />
       </label>
       <button type="button" onClick={handleUpdateClick}>Update Car</button>
     </div>

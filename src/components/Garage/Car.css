@@ -1,0 +1,62 @@
+.car {
+  list-style-type: none;
+  padding: 0;
+}
+
+.car-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.car-item {
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.car-details {
+  display: flex;
+}
+
+.car-info {
+  display: flex;
+  align-items: center;
+}
+
+.car-controls {
+  display: flex;
+  align-items: center;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.control-button {
+  width: 70px; /* Set the desired width for all buttons */
+  margin-right: 10px;
+}
+
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+@keyframes moveCar {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(1000px); } /* Adjust the distance as needed */
+}
+
+.animated-car {
+  animation: moveCar 5s linear forwards; /* Adjust the duration and timing function as needed */
+}

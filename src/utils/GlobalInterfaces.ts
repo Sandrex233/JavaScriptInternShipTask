@@ -2,6 +2,7 @@ export interface Car {
   id?: number;
   name: string;
   color: string;
+  engineStatus?: 'stopped' | 'started';
 }
 
 export interface Winner {
@@ -12,4 +13,9 @@ export interface Winner {
 
 export interface WinnerWithCar extends Winner {
   car: Car;
+}
+
+export interface EngineResponseDTO {
+  velocity: number;
+  distance: number;
 }

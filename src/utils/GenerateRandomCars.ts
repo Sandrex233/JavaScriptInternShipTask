@@ -1,6 +1,6 @@
 import { Car } from './GlobalInterfaces.ts';
 
-const generateRandomCars = (): Car => {
+const generateRandomCar = (): Car => {
   const carParts1 = [
     'Tesla',
     'Ford',
@@ -53,4 +53,4 @@ const generateRandomCars = (): Car => {
   return newCar;
 };
 
-export default generateRandomCars;
+export default generateRandomCar;
