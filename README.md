@@ -1,6 +1,6 @@
 # JavaScriptInternShipTask
 
-## Current Score: 135
+## Current Score: 320
 
 ## Checklist
 
@@ -24,7 +24,7 @@
 
 - [x] **Two Views (10 points):** Implement two primary views: "Garage" and "Winners".
 - [x] **Garage View Content (5 points):** The "Garage" view must display its name, the current page number, and the total number of cars in the database (how many car user has in his garage).
-- [ ] **Winners View Content (5 points):** The "Winners" view should similarly display its name, the current page number, and the total count of records in the database (how many records the winners table contains).
+- [x] **Winners View Content (5 points):** The "Winners" view should similarly display its name, the current page number, and the total count of records in the database (how many records the winners table contains).
 - [ ] **Persistent State (10 points):** Ensure the view state remains consistent when navigating between views. This includes preserving page numbers and input states. For example, page number shouldn't be reset, input controls should contain that they contained before switching, etc.
 
 ### 2. Garage View Functionality (55 points)
@@ -43,23 +43,23 @@
 ## 🚗 Car Animation (50 points)
 
 - [x] **Engine Control Buttons (10 points):** Place start/stop engine buttons near each car's image.
-- [] **Start Engine Animation (20 points):** User clicks to the engine start button -> UI is waiting for car's velocity answer -> animate the car and makes another request to drive. In case api returned 500 error car animation should be stopped.
+- [x] **Start Engine Animation (20 points):** User clicks to the engine start button -> UI is waiting for car's velocity answer -> animate the car and makes another request to drive. In case api returned 500 error car animation should be stopped.
 - [ ] **Stop Engine Animation (10 points):** User clicks to the engine stop button -> UI is waiting for answer for stopping engine -> car returned to it's initial place.
 - [x] **Button States (5 points):** Start engine button should be disabled in case car is already in driving mode. As well as stop engine button should be disabled when car is on it's initial place.
 - [ ] **Responsive Animation (5 points):** Ensure car animations are fluid and responsive on screens as small as 500px.
 
 ## 🏎️ Race Animation (35 points)
 
-- [ ] **Start Race Button (15 points):** Implement a button to start the race for all cars on the current page.
-- [ ] **Reset Race Button (10 points):** Create a button to reset the race, returning all cars to their starting positions.
+- [x] **Start Race Button (15 points):** Implement a button to start the race for all cars on the current page.
+- [x] **Reset Race Button (10 points):** Create a button to reset the race, returning all cars to their starting positions.
 - [ ] **Winner Announcement (10 points):** After some car finishes first user should see the message contains car's name that shows which one has won.
 
 ## 🏆 Winners View (45 points)
 
-- [ ] **Display Winners (15 points):** After some car wins it should be displayed at the "Winners view" table.
-- [ ] **Pagination for Winners (10 points):** Implement pagination for the "Winners" view, with 10 winners per page.
-- [ ] **Winners Table (10 points):** The table should include columns for the car's №, image, name, number of wins, and best time in seconds. If the same car wins more than once the number of wins should be incremented while best time should be saved only if it's better than the stored one.
-- [ ] **Sorting Functionality (10 points):** Allow users to sort the table by the number of wins and best time, in ascending or descending order.
+- [x] **Display Winners (15 points):** After some car wins it should be displayed at the "Winners view" table.
+- [x] **Pagination for Winners (10 points):** Implement pagination for the "Winners" view, with 10 winners per page.
+- [x] **Winners Table (10 points):** The table should include columns for the car's №, image, name, number of wins, and best time in seconds. If the same car wins more than once the number of wins should be incremented while best time should be saved only if it's better than the stored one.
+- [x] **Sorting Functionality (10 points):** Allow users to sort the table by the number of wins and best time, in ascending or descending order.
 
 ## 🏗️ Application Architecture (40 points)
 
@@ -67,7 +67,7 @@
 
 ## 📜 Dynamic Content Generation (30 points)
 
-- [ ] **JavaScript-Generated HTML Content (30 points):** All HTML content must be dynamically generated using JavaScript, with the `<body>` tag containing only a single `<script>` tag.
+- [x] **JavaScript-Generated HTML Content (30 points):** All HTML content must be dynamically generated using JavaScript, with the `<body>` tag containing only a single `<script>` tag.
 
 ## 🌐 Single Page Application (25 points)
 
