@@ -52,11 +52,21 @@ body {
   padding: 20px;
 }
 
-@keyframes moveCar {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(1000px); } /* Adjust the distance as needed */
+@keyframes drive {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
-.animated-car {
-  animation: moveCar 5s linear forwards; /* Adjust the duration and timing function as needed */
+.car-animation {
+  animation: drive 5s linear infinite;
+}
+
+@media screen and (max-width: 500px) {
+  .car-animation {
+    animation-duration: 3s; /* Example duration for smaller screens */
+  }
 }

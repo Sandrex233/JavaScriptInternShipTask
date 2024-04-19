@@ -1,52 +1,104 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { WinnerWithCar } from '../../utils/GlobalInterfaces.ts';
 import fetchWinners from '../../api/apiService.ts';
+import CarSVGComponent from '../CarSVG.tsx';
+import Pagination from '../Pagination.tsx';
+
+enum SortField {
+  WINS = 'wins',
+  TIME = 'time',
+}
+
+enum SortOrder {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}
 
 const Winners: React.FC = () => {
   const [winners, setWinners] = useState<WinnerWithCar[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const [sortBy, setSortBy] = useState<SortField>(SortField.WINS);
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.DESC);
 
-  useEffect(() => {
-    fetchWinners(1, 10, 'wins', 'DESC')
+  const fetchWinnersCallback = useCallback(async (
+    cPage: number,
+    cSortBy: string,
+    cSortOrder: string,
+  ) => {
+    fetchWinners(cPage, 10, cSortBy, cSortOrder)
       .then((data) => {
-        setWinners(data);
-      })
-      .catch((error) => {
-        throw new Error(`Error fetching winners: ${error}`);
+        setWinners(data.winners);
+        setTotalPages(Math.ceil(data.totalCount / 10));
+        setTotalCount(data.totalCount);
       });
   }, []);
 
+  useEffect(() => {
+    fetchWinnersCallback(page, sortBy, sortOrder);
+  }, [page, sortBy, sortOrder, fetchWinnersCallback]);
+
+  const handleSortBy = (field: SortField): void => {
+    if (field === sortBy) {
+      setSortOrder(sortOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC);
+    } else {
+      setSortBy(field);
+      setSortOrder(SortOrder.DESC);
+    }
+  };
+
+  const handlePreviousPage = (): void => {
+    if (page > 1) {
+      setPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (page < totalPages) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+
   return (
     <div className="container">
-      <h2>Winners View</h2>
-      <ul className="winners-list">
-        {winners.map((winner) => (
-          <li className="winner-item" key={winner.id}>
-            <strong>
-              Winner #
-              {winner.id}
-            </strong>
-            <p>
-              Wins:
-              {winner.wins}
-            </p>
-            <p>
-              Time:
-              {winner.time}
-            </p>
-            {winner.car && (
-              <p>
-                Car:
-                {' '}
-                {winner.car.name}
-                {' '}
-                (
-                {winner.car.color}
-                )
-              </p>
-            )}
-          </li>
-        ))}
-      </ul>
+      <h1>Winners</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Image</th>
+            <th>Name</th>
+            <th onClick={() => handleSortBy(SortField.WINS)}>Wins</th>
+            <th onClick={() => handleSortBy(SortField.TIME)}>Best Time (Seconds)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {winners.map((winner) => (
+            <tr key={winner.id}>
+              <td>{winner.id}</td>
+              <CarSVGComponent fill={winner.car.color} />
+              <td>{winner.car.name}</td>
+              <td>{winner.wins}</td>
+              <td>{winner.time}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <p>
+        Total Winners:
+        {totalCount}
+      </p>
+      {' '}
+      {/* Display total count here */}
+
+      <Pagination
+        currentPage={page}
+        totalPages={totalPages}
+        onPreviousPage={handlePreviousPage}
+        onNextPage={handleNextPage}
+      />
     </div>
   );
 };

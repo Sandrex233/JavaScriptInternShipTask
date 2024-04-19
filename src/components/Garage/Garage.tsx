@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Car } from '../../utils/GlobalInterfaces.ts';
 import {
   createRandomCars, fetchCars,
@@ -8,32 +8,39 @@ import UpdateCarForm from './UpdateCarForm.tsx';
 import CarComponent from './CarComponent.tsx';
 import CreateCarForm from './CreateCarForm.tsx';
 import './Car.css';
+import Pagination from '../Pagination.tsx';
 
 const Garage: React.FC = () => {
   const [cars, setCars] = useState<Car[]>([]);
   const [page, setPage] = useState<number>(1);
   const [totalCount, setTotalCount] = useState<number>(0);
-  const [carId, setCarId] = useState<number>();
+  const [carId, setCarId] = useState<number | undefined>();
+  const [raceStarted, setRaceStarted] = useState<boolean | undefined>(undefined);
 
-  useEffect(() => {
-    fetchCars(page, 7)
-      .then((fetchedCars) => {
-        setCars(fetchedCars.cars);
-        setTotalCount(fetchedCars.totalCount);
-      })
+  const fetchCarsCallback = useCallback(async (cPage: number) => {
+    fetchCars(cPage, 7).then((fetchedCars) => {
+      setCars(fetchedCars.cars);
+      setTotalCount(fetchedCars.totalCount);
+    })
       .catch((error) => {
         throw error;
       });
-  }, [page]);
+  }, []);
+
+  useEffect(() => {
+    fetchCarsCallback(page);
+  }, [page, fetchCarsCallback]);
 
   const handlePreviousPage = () => {
     if (page > 1) {
       setPage((prevPage) => prevPage - 1);
+      setRaceStarted(undefined);
     }
   };
 
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
+    setRaceStarted(undefined);
   };
 
   const handleGenerateRandomCars = async (): Promise<void> => {
@@ -61,19 +68,27 @@ const Garage: React.FC = () => {
     await updateCar(id, { name: updatedName, color: updatedColor });
   };
 
+  const startRace = () => {
+    if (raceStarted === false || raceStarted === undefined) {
+      setRaceStarted(true);
+      if (raceStarted) {
+        setTimeout(() => {
+          setRaceStarted(false);
+        }, 10000);
+      }
+    }
+  };
+
+  const resetRace = () => {
+    if (raceStarted === true || raceStarted !== undefined) setRaceStarted(false);
+  };
+
   return (
     <div className="container">
       <h2>Garage</h2>
       <button type="button" onClick={handleGenerateRandomCars}>
         Generate 100 Random Cars
       </button>
-      <button type="button" onClick={handlePreviousPage} disabled={page === 1}>
-        Previous Page
-      </button>
-      <button type="button" onClick={handleNextPage}>
-        Next Page
-      </button>
-
       <CreateCarForm />
       <UpdateCarForm
         onUpdateCar={(updatedName, updatedColor) => {
@@ -82,18 +97,19 @@ const Garage: React.FC = () => {
           }
         }}
       />
+      <button type="button" onClick={startRace}>Race</button>
+      <button type="button" onClick={resetRace}>Reset</button>
       <CarComponent
         cars={cars}
         setCarId={setCarId}
+        raceStarted={raceStarted}
       />
-      <p>
-        count:
-        {totalCount}
-      </p>
-      <p>
-        Page
-        {page}
-      </p>
+      <Pagination
+        currentPage={page}
+        totalPages={Math.round(totalCount / 7)}
+        onPreviousPage={handlePreviousPage}
+        onNextPage={handleNextPage}
+      />
     </div>
   );
 };

@@ -19,3 +19,15 @@ export interface EngineResponseDTO {
   velocity: number;
   distance: number;
 }
+
+export interface WinnerDTO {
+  id: number;
+  wins: number;
+  time: number;
+}
+
+export enum CarStatus {
+  Stopped,
+  Started,
+  Drive,
+}

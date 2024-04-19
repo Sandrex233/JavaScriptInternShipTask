@@ -1,7 +1,7 @@
 import { Car } from './GlobalInterfaces.ts';
 
 const generateRandomCar = (): Car => {
-  const carParts1 = [
+  const carParts1: string[] = [
     'Tesla',
     'Ford',
     'Chevrolet',
@@ -14,7 +14,7 @@ const generateRandomCar = (): Car => {
     'Subaru',
     'Jeep',
   ];
-  const carParts2 = [
+  const carParts2: string[] = [
     'Model S',
     'Camaro',
     'Corolla',
@@ -27,7 +27,7 @@ const generateRandomCar = (): Car => {
     'Wrangler',
     'F-150',
   ];
-  const colors = [
+  const colors: string[] = [
     '#ff0000',
     '#0000ff',
     '#ffffff',
