@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Garage from './components/Garage/Garage.tsx';
 import Winners from './components/Winners/Winners.tsx';
+import { AppProvider } from './context/AppContext.tsx';
 
 const App: React.FC = () => {
   const [view, setView] = useState<'garage' | 'winners'>('garage');
@@ -15,8 +16,12 @@ const App: React.FC = () => {
           Winners
         </button>
       </div>
-      {view === 'garage' && <Garage />}
-      {view === 'winners' && <Winners />}
+      <AppProvider>
+        {view === 'garage' && (
+        <Garage />
+        )}
+        {view === 'winners' && <Winners />}
+      </AppProvider>
     </div>
   );
 };

@@ -8,14 +8,16 @@ interface CarFormProps {
   setTotalCount: React.Dispatch<React.SetStateAction<number>>;
   updateMode: boolean;
   carId: number | undefined;
-  setCarId: React.Dispatch<React.SetStateAction<number | undefined>> | undefined;
+setCarId: React.Dispatch<React.SetStateAction<number | undefined>> | undefined;
+  name: string;
+  setName: React.Dispatch<React.SetStateAction<string>>;
+  color: string;
+  setColor: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const CarForm: React.FC<CarFormProps> = ({
-  cars, setCars, setTotalCount, updateMode, carId, setCarId,
+  cars, setCars, setTotalCount, updateMode, carId, setCarId, name, setName, color, setColor,
 }) => {
-  const [name, setName] = useState<string>('');
-  const [color, setColor] = useState<string>('#000000');
   const [showError, setShowError] = useState<boolean>(false);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {

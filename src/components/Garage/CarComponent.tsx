@@ -61,6 +61,7 @@ const CarComponent: React.FC<CarComponentProps> = ({
           wins: 1,
           time: parseFloat(((distance! / bestVelocity) / 1000).toFixed(2)),
         });
+        setCarVelocities({});
       }
     }
   }, [raceStarted, cars, carVelocities, distance]);

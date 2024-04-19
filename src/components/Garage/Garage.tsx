@@ -5,14 +5,22 @@ import './Car.css';
 import Pagination from '../Pagination.tsx';
 import { createRandomCars, fetchCars } from '../../api/carService.ts';
 import CarForm from './CarForm.tsx';
+import useAppContext from '../../context/useAppContext.ts';
 
 const Garage: React.FC = () => {
   const [cars, setCars] = useState<Car[]>([]);
-  const [page, setPage] = useState<number>(1);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [carId, setCarId] = useState<number | undefined>();
   const [raceStarted, setRaceStarted] = useState<boolean | undefined>(undefined);
   const updateMode: boolean = true;
+
+  const {
+    garagePages, setGaragePages,
+    createCarName, setCreateCarName,
+    createCarColor, setCreateCarColor,
+    updateCarName, setUpdateCarName,
+    updateCarColor, setUpdateCarColor,
+  } = useAppContext();
 
   const fetchCarsCallback = useCallback(async (cPage: number) => {
     fetchCars(cPage, 7).then((fetchedCars) => {
@@ -25,18 +33,18 @@ const Garage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    fetchCarsCallback(page);
-  }, [page, fetchCarsCallback]);
+    fetchCarsCallback(garagePages);
+  }, [garagePages, fetchCarsCallback]);
 
   const handlePreviousPage = () => {
-    if (page > 1) {
-      setPage((prevPage) => prevPage - 1);
+    if (garagePages > 1) {
+      setGaragePages((prevPage: number) => prevPage - 1);
       setRaceStarted(undefined);
     }
   };
 
   const handleNextPage = () => {
-    setPage((prevPage) => prevPage + 1);
+    setGaragePages((prevPage: number) => prevPage + 1);
     setRaceStarted(undefined);
   };
 
@@ -47,7 +55,7 @@ const Garage: React.FC = () => {
     }
     Promise.all(promises)
       .then(() => {
-        fetchCars(page, 7)
+        fetchCars(garagePages, 7)
           .then((fetchedCars) => {
             setCars(fetchedCars.cars);
             setTotalCount(fetchedCars.totalCount);
@@ -87,6 +95,10 @@ const Garage: React.FC = () => {
         updateMode={!updateMode}
         carId={undefined}
         setCarId={undefined}
+        name={createCarName}
+        setName={setCreateCarName}
+        color={createCarColor}
+        setColor={setCreateCarColor}
       />
       <CarForm
         cars={cars}
@@ -95,6 +107,10 @@ const Garage: React.FC = () => {
         updateMode={updateMode}
         carId={carId}
         setCarId={setCarId}
+        name={updateCarName}
+        setName={setUpdateCarName}
+        color={updateCarColor}
+        setColor={setUpdateCarColor}
       />
       <button type="button" onClick={startRace}>Race</button>
       <button type="button" onClick={resetRace}>Reset</button>
@@ -104,13 +120,14 @@ const Garage: React.FC = () => {
         setTotalCount={setTotalCount}
         setCarId={setCarId}
         raceStarted={raceStarted}
+
       />
       <p>
         Total Cars:
         {totalCount}
       </p>
       <Pagination
-        currentPage={page}
+        currentPage={garagePages}
         totalPages={Math.round(totalCount / 7)}
         onPreviousPage={handlePreviousPage}
         onNextPage={handleNextPage}

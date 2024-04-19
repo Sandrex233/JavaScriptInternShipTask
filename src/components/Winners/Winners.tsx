@@ -3,6 +3,7 @@ import { WinnerWithCar } from '../../utils/GlobalInterfaces.ts';
 import CarSVGComponent from '../CarSVG.tsx';
 import Pagination from '../Pagination.tsx';
 import fetchWinners from '../../api/winnerService.ts';
+import useAppContext from '../../context/useAppContext.ts';
 
 // eslint-disable-next-line no-shadow, no-unused-vars
 enum SortField {
@@ -22,11 +23,12 @@ enum SortOrder {
 
 const Winners: React.FC = () => {
   const [winners, setWinners] = useState<WinnerWithCar[]>([]);
-  const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [sortBy, setSortBy] = useState<SortField>(SortField.WINS);
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.DESC);
+
+  const { winnerPages, setwinnerPages } = useAppContext();
 
   const fetchWinnersCallback = useCallback(async (
     cPage: number,
@@ -42,8 +44,8 @@ const Winners: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    fetchWinnersCallback(page, sortBy, sortOrder);
-  }, [page, sortBy, sortOrder, fetchWinnersCallback]);
+    fetchWinnersCallback(winnerPages, sortBy, sortOrder);
+  }, [winnerPages, sortBy, sortOrder, fetchWinnersCallback]);
 
   const handleSortBy = (field: SortField): void => {
     if (field === sortBy) {
@@ -55,14 +57,14 @@ const Winners: React.FC = () => {
   };
 
   const handlePreviousPage = (): void => {
-    if (page > 1) {
-      setPage((prevPage) => prevPage - 1);
+    if (winnerPages > 1) {
+      setwinnerPages((prevPage: number) => prevPage - 1);
     }
   };
 
   const handleNextPage = () => {
-    if (page < totalPages) {
-      setPage((prevPage) => prevPage + 1);
+    if (winnerPages < totalPages) {
+      setwinnerPages((prevPage: number) => prevPage + 1);
     }
   };
 
@@ -96,7 +98,7 @@ const Winners: React.FC = () => {
         {totalCount}
       </p>
       <Pagination
-        currentPage={page}
+        currentPage={winnerPages}
         totalPages={totalPages}
         onPreviousPage={handlePreviousPage}
         onNextPage={handleNextPage}
