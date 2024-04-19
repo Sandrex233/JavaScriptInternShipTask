@@ -85,14 +85,10 @@ const Winners: React.FC = () => {
           ))}
         </tbody>
       </table>
-
       <p>
         Total Winners:
         {totalCount}
       </p>
-      {' '}
-      {/* Display total count here */}
-
       <Pagination
         currentPage={page}
         totalPages={totalPages}

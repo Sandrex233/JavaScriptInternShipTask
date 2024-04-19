@@ -28,9 +28,11 @@ const CarControl: React.FC<CarControlProps> = ({
     if (status === CarStatus.Stopped) {
       setStatus(CarStatus.Started);
       onStartEngine();
-      handleSwitchToDrive();
+      if (raceStarted === false) {
+        handleSwitchToDrive();
+      }
     }
-  }, [handleSwitchToDrive, onStartEngine, status]);
+  }, [handleSwitchToDrive, onStartEngine, raceStarted, status]);
 
   const handleStopEngine = useCallback(() => {
     if (status !== CarStatus.Stopped) {

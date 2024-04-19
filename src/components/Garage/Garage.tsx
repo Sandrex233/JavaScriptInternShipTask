@@ -71,11 +71,9 @@ const Garage: React.FC = () => {
   const startRace = () => {
     if (raceStarted === false || raceStarted === undefined) {
       setRaceStarted(true);
-      if (raceStarted) {
-        setTimeout(() => {
-          setRaceStarted(false);
-        }, 10000);
-      }
+      setTimeout(() => {
+        setRaceStarted(false);
+      }, 10000);
     }
   };
 

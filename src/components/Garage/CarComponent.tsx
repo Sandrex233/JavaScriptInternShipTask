@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { CSSProperties, useState } from 'react';
 import { Car } from '../../utils/GlobalInterfaces.ts';
 import CarSVGComponent from '../CarSVG.tsx';
 import {
@@ -19,27 +19,31 @@ const CarComponent: React.FC<CarComponentProps> = ({
   setCarId,
   raceStarted,
 }) => {
-  const carRefs = useRef<HTMLDivElement[]>([]);
-
-  let carValues: {[key: number]: number} = {};
+  // let carValues: {[key: number]: number} = {};
   let distance: number;
+  const [carVelocities, setCarVelocities] = useState<{ [key: number]: number }>({});
 
   const handleStartEngine = async (carId: number) => {
     await startEngine(carId).then((res) => {
-      carValues = {
-        ...carValues,
-        [carId]: res.velocity,
-      };
+      // carValues = {
+      //   ...carValues,
+      //   [carId]: res.velocity,
+      // };
+      const newVelocity = res.velocity;
+      setCarVelocities((prevVelocities) => ({
+        ...prevVelocities,
+        [carId]: newVelocity,
+      }));
       distance = res.distance;
     });
 
     if (raceStarted === true) {
-      if (cars.length === Object.keys(carValues).length) {
+      if (cars.length === Object.keys(carVelocities).length) {
         let bestCarId: number = 1;
         let bestVelocity: number = 0;
-        Object.keys(carValues).forEach((carIdStr) => {
+        Object.keys(carVelocities).forEach((carIdStr) => {
           const cId: number = parseInt(carIdStr, 10);
-          const velocity: number = carValues[cId];
+          const velocity: number = carVelocities[cId];
           if (velocity > bestVelocity) {
             bestVelocity = velocity;
             bestCarId = cId;
@@ -72,31 +76,42 @@ const CarComponent: React.FC<CarComponentProps> = ({
 
   return (
     <ul className="car">
-      {cars.map((car, index) => (
-        <li key={car.id} className="car-item">
-          <div className="car-details">
-            <div className="car-controls">
-              <div className="buttons">
-                <button className="control-button" type="button" onClick={() => car.id !== undefined && handleSelectCar(car.id)}>Select</button>
-                <button className="control-button" type="button" onClick={() => car.id !== undefined && handleRemoveCar(car.id)}>Remove</button>
+      {cars.map((car) => {
+        const animationDuration: string | false = car.id !== undefined && `${1000 / carVelocities[car.id]}s`;
+        const animationStyle: CSSProperties = animationDuration && raceStarted ? {
+          animation: `drive ${animationDuration && animationDuration} linear forwards`,
+        } : {};
+        return (
+          <li key={car.id} className="car-item">
+            <div className="car-details">
+              <div className="car-controls">
+                <div className="buttons">
+                  <button className="control-button" type="button" onClick={() => car.id !== undefined && handleSelectCar(car.id)}>Select</button>
+                  <button className="control-button" type="button" onClick={() => car.id !== undefined && handleRemoveCar(car.id)}>Remove</button>
+                </div>
+                <CarControl
+                  onStartEngine={() => car.id !== undefined && handleStartEngine(car.id)}
+                  onStopEngine={() => car.id !== undefined && handleStopEngine(car.id)}
+                  onSwitchToDriveMode={
+                    () => car.id !== undefined && handleSwitchToDriveMode(car.id)
+                  }
+                  raceStarted={raceStarted}
+                />
               </div>
-              <CarControl
-                onStartEngine={() => car.id !== undefined && handleStartEngine(car.id)}
-                onStopEngine={() => car.id !== undefined && handleStopEngine(car.id)}
-                onSwitchToDriveMode={() => car.id !== undefined && handleSwitchToDriveMode(car.id)}
-                raceStarted={raceStarted}
-              />
+              <div
+                className="car-info"
+              >
+                <div
+                  style={animationStyle}
+                >
+                  <CarSVGComponent fill={car.color} />
+                </div>
+                <strong>{car.name.toUpperCase()}</strong>
+              </div>
             </div>
-            <div
-              ref={(el) => { if (el) carRefs.current[index] = el; }}
-              className={`car-info ${(raceStarted) ? 'car-animation' : ''}`}
-            >
-              <CarSVGComponent fill={car.color} />
-              <strong>{car.name.toUpperCase()}</strong>
-            </div>
-          </div>
-        </li>
-      ))}
+          </li>
+        );
+      })}
     </ul>
   );
 };
