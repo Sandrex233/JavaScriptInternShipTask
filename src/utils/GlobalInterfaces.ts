@@ -20,14 +20,12 @@ export interface EngineResponseDTO {
   distance: number;
 }
 
-export interface WinnerDTO {
-  id: number;
-  wins: number;
-  time: number;
-}
-
+// eslint-disable-next-line no-shadow
 export enum CarStatus {
+  // eslint-disable-next-line no-unused-vars
   Stopped,
+  // eslint-disable-next-line no-unused-vars
   Started,
+  // eslint-disable-next-line no-unused-vars
   Drive,
 }

@@ -1,16 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { WinnerWithCar } from '../../utils/GlobalInterfaces.ts';
-import fetchWinners from '../../api/apiService.ts';
 import CarSVGComponent from '../CarSVG.tsx';
 import Pagination from '../Pagination.tsx';
+import fetchWinners from '../../api/winnerService.ts';
 
+// eslint-disable-next-line no-shadow, no-unused-vars
 enum SortField {
+  // eslint-disable-next-line no-unused-vars
   WINS = 'wins',
+  // eslint-disable-next-line no-unused-vars
   TIME = 'time',
 }
 
+// eslint-disable-next-line no-shadow, no-unused-vars
 enum SortOrder {
+  // eslint-disable-next-line no-unused-vars
   ASC = 'ASC',
+  // eslint-disable-next-line no-unused-vars
   DESC = 'DESC',
 }
 

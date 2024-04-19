@@ -1,14 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Car } from '../../utils/GlobalInterfaces.ts';
-import {
-  createRandomCars, fetchCars,
-  updateCar,
-} from '../../api/apiService.ts';
-import UpdateCarForm from './UpdateCarForm.tsx';
 import CarComponent from './CarComponent.tsx';
-import CreateCarForm from './CreateCarForm.tsx';
 import './Car.css';
 import Pagination from '../Pagination.tsx';
+import { createRandomCars, fetchCars } from '../../api/carService.ts';
+import CarForm from './CarForm.tsx';
 
 const Garage: React.FC = () => {
   const [cars, setCars] = useState<Car[]>([]);
@@ -16,6 +12,7 @@ const Garage: React.FC = () => {
   const [totalCount, setTotalCount] = useState<number>(0);
   const [carId, setCarId] = useState<number | undefined>();
   const [raceStarted, setRaceStarted] = useState<boolean | undefined>(undefined);
+  const updateMode: boolean = true;
 
   const fetchCarsCallback = useCallback(async (cPage: number) => {
     fetchCars(cPage, 7).then((fetchedCars) => {
@@ -64,10 +61,6 @@ const Garage: React.FC = () => {
       });
   };
 
-  const handleUpdateCar = async (id: number, updatedName: string, updatedColor: string) => {
-    await updateCar(id, { name: updatedName, color: updatedColor });
-  };
-
   const startRace = () => {
     if (raceStarted === false || raceStarted === undefined) {
       setRaceStarted(true);
@@ -87,21 +80,35 @@ const Garage: React.FC = () => {
       <button type="button" onClick={handleGenerateRandomCars}>
         Generate 100 Random Cars
       </button>
-      <CreateCarForm />
-      <UpdateCarForm
-        onUpdateCar={(updatedName, updatedColor) => {
-          if (carId !== undefined) {
-            handleUpdateCar(carId, updatedName, updatedColor);
-          }
-        }}
+      <CarForm
+        cars={cars}
+        setCars={setCars}
+        setTotalCount={setTotalCount}
+        updateMode={!updateMode}
+        carId={undefined}
+        setCarId={undefined}
+      />
+      <CarForm
+        cars={cars}
+        setCars={setCars}
+        setTotalCount={setTotalCount}
+        updateMode={updateMode}
+        carId={carId}
+        setCarId={setCarId}
       />
       <button type="button" onClick={startRace}>Race</button>
       <button type="button" onClick={resetRace}>Reset</button>
       <CarComponent
         cars={cars}
+        setCars={setCars}
+        setTotalCount={setTotalCount}
         setCarId={setCarId}
         raceStarted={raceStarted}
       />
+      <p>
+        Total Cars:
+        {totalCount}
+      </p>
       <Pagination
         currentPage={page}
         totalPages={Math.round(totalCount / 7)}

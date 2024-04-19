@@ -1,27 +1,30 @@
-import React, { CSSProperties, useState } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import { Car } from '../../utils/GlobalInterfaces.ts';
 import CarSVGComponent from '../CarSVG.tsx';
-import {
-  createWinner,
-  deleteCar, startEngine, stopEngine, switchToDriveMode,
-} from '../../api/apiService.ts';
 import CarControl from './CarControl.tsx';
 import './Car.css';
+import { startEngine, stopEngine, switchToDriveMode } from '../../api/engineService.ts';
+import { createWinner } from '../../api/winnerService.ts';
+import { deleteCar } from '../../api/carService.ts';
 
 interface CarComponentProps {
   cars: Car[];
+  setCars: React.Dispatch<React.SetStateAction<Car[]>>;
+  setTotalCount: React.Dispatch<React.SetStateAction<number>>;
   setCarId: React.Dispatch<React.SetStateAction<number | undefined>>;
   raceStarted: boolean | undefined;
 }
 
 const CarComponent: React.FC<CarComponentProps> = ({
   cars,
+  setCars,
+  setTotalCount,
   setCarId,
   raceStarted,
 }) => {
   // let carValues: {[key: number]: number} = {};
-  let distance: number;
   const [carVelocities, setCarVelocities] = useState<{ [key: number]: number }>({});
+  const [distance, setDistance] = useState<number>();
 
   const handleStartEngine = async (carId: number) => {
     await startEngine(carId).then((res) => {
@@ -29,34 +32,38 @@ const CarComponent: React.FC<CarComponentProps> = ({
       //   ...carValues,
       //   [carId]: res.velocity,
       // };
-      const newVelocity = res.velocity;
       setCarVelocities((prevVelocities) => ({
         ...prevVelocities,
-        [carId]: newVelocity,
+        [carId]: res.velocity,
       }));
-      distance = res.distance;
+      setDistance(res.distance);
     });
+  };
 
-    if (raceStarted === true) {
-      if (cars.length === Object.keys(carVelocities).length) {
-        let bestCarId: number = 1;
-        let bestVelocity: number = 0;
-        Object.keys(carVelocities).forEach((carIdStr) => {
-          const cId: number = parseInt(carIdStr, 10);
-          const velocity: number = carVelocities[cId];
-          if (velocity > bestVelocity) {
-            bestVelocity = velocity;
-            bestCarId = cId;
-          }
-        });
-        await createWinner({
+  useEffect(() => {
+    const raceFinished = cars.length === Object.keys(carVelocities).length;
+
+    if (raceFinished) {
+      let bestCarId: number = 1;
+      let bestVelocity: number = 0;
+      Object.keys(carVelocities).forEach((carIdStr) => {
+        const cId: number = parseInt(carIdStr, 10);
+        const velocity: number = carVelocities[cId];
+        if (velocity > bestVelocity) {
+          bestVelocity = velocity;
+          bestCarId = cId;
+        }
+      });
+
+      if (raceStarted === false) {
+        createWinner({
           id: bestCarId,
           wins: 1,
-          time: parseFloat(((distance / bestVelocity) / 1000).toFixed(2)),
+          time: parseFloat(((distance! / bestVelocity) / 1000).toFixed(2)),
         });
       }
     }
-  };
+  }, [raceStarted, cars, carVelocities, distance]);
 
   const handleStopEngine = async (carId: number) => {
     await stopEngine(carId);
@@ -68,6 +75,9 @@ const CarComponent: React.FC<CarComponentProps> = ({
 
   const handleRemoveCar = async (id: number) => {
     await deleteCar(id);
+    const updatedCars = cars.filter((car) => car.id !== id);
+    setTotalCount((prevTotalCount) => prevTotalCount - 1);
+    setCars(updatedCars);
   };
 
   const handleSelectCar = (selectedCarId: number): void => {

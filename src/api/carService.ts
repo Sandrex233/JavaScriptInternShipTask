@@ -66,20 +66,19 @@ export const createCar = async (name: string, color: string): Promise<Car> => {
   return response.json();
 };
 
-export const updateCar = async (id: number, updatedCar: Car): Promise<Car> => {
-  const response = await fetch(`${BASE_URL}/garage/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(updatedCar),
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to update car');
+export const updateCar = async (id: number, updatedCar: Car): Promise<Car | Error> => {
+  try {
+    const response = await fetch(`${BASE_URL}/garage/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedCar),
+    });
+    return response.json();
+  } catch (e) {
+    return e as Error;
   }
-
-  return response.json();
 };
 
 export const deleteCar = async (id: number): Promise<void> => {
