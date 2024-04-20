@@ -1,13 +1,13 @@
 # JavaScriptInternShipTask
 
-## Current Score: 345
+## Current Score: 355
 
 ## UI Deployment
 
 The UI is deployed and can be accessed here: https://async-race-react-sandrex233.netlify.app/.
 
 ### Notes
-- Make sure the async-race-api backend server is running before starting the frontend development server to ensure proper communication between the frontend and backend.
+- Make sure the async-race-api backend server is running in order for frontend to work properly and to ensure proper communication between the frontend and backend.
 
 
 ## Setup and Running
@@ -19,22 +19,22 @@ The UI is deployed and can be accessed here: https://async-race-react-sandrex233
 
 1. **Clone the async-race-api repository:**
    ```
-   $ git clone https://github.com/mikhama/async-race-api.git
+   git clone https://github.com/mikhama/async-race-api.git
    ```
 
 2. Navigate to the downloaded folder:
     ```
-    $ cd async-race-api
+    cd async-race-api
     ```
 
 3. Install dependencies:
     ```
-    $ npm install
+    npm install
     ```
 
 4. Start the server:
     ```
-    $ npm start
+    npm start
     ```
 
 5. Access the API:
@@ -44,22 +44,22 @@ The UI is deployed and can be accessed here: https://async-race-react-sandrex233
 ### Frontend Setup
 1. Clone this repository:
     ```
-    $ git clone https://github.com/Sandrex233/JavaScriptInternShipTask.git
+    git clone https://github.com/Sandrex233/JavaScriptInternShipTask.git
     ```
 
 2. Navigate to the downloaded folder:
     ```
-    $ cd JavaScriptInternShipTask
+    cd JavaScriptInternShipTask
     ```
 
 3. Install dependencies:
     ```
-    $ npm install
+    npm install
     ```
 
 4. Start the frontend development server:
     ```
-    $ npm run dev
+    npm run dev
     ```
 
 
@@ -114,7 +114,7 @@ The UI is deployed and can be accessed here: https://async-race-react-sandrex233
 
 - [x] **Start Race Button (15 points):** Implement a button to start the race for all cars on the current page.
 - [x] **Reset Race Button (10 points):** Create a button to reset the race, returning all cars to their starting positions.
-- [ ] **Winner Announcement (10 points):** After some car finishes first user should see the message contains car's name that shows which one has won.
+- [x] **Winner Announcement (10 points):** After some car finishes first user should see the message contains car's name that shows which one has won.
 
 ## 🏆 Winners View (45 points)
 
