@@ -1,0 +1,21 @@
+.switch-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+  
+.switch-button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #f9f9f9;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+  
+.switch-button.active {
+    background-color: #22559c;
+    color: #fff;
+}

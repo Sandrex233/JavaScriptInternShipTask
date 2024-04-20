@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Car } from '../../utils/GlobalInterfaces.ts';
+import { Car, WinnerWithCar } from '../../utils/GlobalInterfaces.ts';
 import CarComponent from './CarComponent.tsx';
 import './Car.css';
 import Pagination from '../Pagination/Pagination.tsx';
@@ -12,6 +12,7 @@ const Garage: React.FC = () => {
   const [totalCount, setTotalCount] = useState<number>(0);
   const [carId, setCarId] = useState<number | undefined>();
   const [raceStarted, setRaceStarted] = useState<boolean | undefined>(undefined);
+  const [winner, setWinner] = useState<WinnerWithCar>();
   const updateMode: boolean = true;
 
   const {
@@ -124,8 +125,17 @@ const Garage: React.FC = () => {
         setTotalCount={setTotalCount}
         setCarId={setCarId}
         raceStarted={raceStarted}
-
+        setWinner={setWinner}
       />
+      {winner && (
+        <div className="winner-announcement">
+          <p>
+            The winner is:
+            {' '}
+            {winner.id}
+          </p>
+        </div>
+      )}
       <p>
         Total Cars:
         {' '}

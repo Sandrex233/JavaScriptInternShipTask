@@ -1,11 +1,11 @@
 import React, { CSSProperties, useEffect, useState } from 'react';
-import { Car } from '../../utils/GlobalInterfaces.ts';
+import { Car, WinnerWithCar } from '../../utils/GlobalInterfaces.ts';
 import CarSVGComponent from '../CarSVG.tsx';
 import CarControl from './CarControl.tsx';
 import './garage.css';
 import { startEngine, stopEngine, switchToDriveMode } from '../../api/engineService.ts';
 import { createWinner } from '../../api/winnerService.ts';
-import { deleteCar } from '../../api/carService.ts';
+import { deleteCar, getCar } from '../../api/carService.ts';
 
 interface CarComponentProps {
   cars: Car[];
@@ -13,6 +13,7 @@ interface CarComponentProps {
   setTotalCount: React.Dispatch<React.SetStateAction<number>>;
   setCarId: React.Dispatch<React.SetStateAction<number | undefined>>;
   raceStarted: boolean | undefined;
+  setWinner: React.Dispatch<React.SetStateAction<WinnerWithCar | undefined>>;
 }
 
 const CarComponent: React.FC<CarComponentProps> = ({
@@ -21,6 +22,7 @@ const CarComponent: React.FC<CarComponentProps> = ({
   setTotalCount,
   setCarId,
   raceStarted,
+  setWinner,
 }) => {
   // let carValues: {[key: number]: number} = {};
   const [carVelocities, setCarVelocities] = useState<{ [key: number]: number }>({});
@@ -60,11 +62,19 @@ const CarComponent: React.FC<CarComponentProps> = ({
           id: bestCarId,
           wins: 1,
           time: parseFloat(((distance! / bestVelocity) / 1000).toFixed(2)),
+        }).then(async (res) => {
+          if (res) {
+            const winnerCar = await getCar(res.id);
+            setWinner({
+              ...res,
+              car: winnerCar,
+            });
+          }
         });
         setCarVelocities({});
       }
     }
-  }, [raceStarted, cars, carVelocities, distance]);
+  }, [raceStarted, cars, carVelocities, distance, setWinner]);
 
   const handleStopEngine = async (carId: number) => {
     await stopEngine(carId);
