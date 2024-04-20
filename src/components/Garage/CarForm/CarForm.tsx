@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { createCar, updateCar } from '../../api/carService.ts';
-import { Car } from '../../utils/GlobalInterfaces.ts';
+import { createCar, updateCar } from '../../../api/carService.ts';
+import { Car } from '../../../utils/GlobalInterfaces.ts';
+import './CarForm.css';
 
 interface CarFormProps {
   cars: Car[];
@@ -8,7 +9,7 @@ interface CarFormProps {
   setTotalCount: React.Dispatch<React.SetStateAction<number>>;
   updateMode: boolean;
   carId: number | undefined;
-setCarId: React.Dispatch<React.SetStateAction<number | undefined>> | undefined;
+  setCarId: React.Dispatch<React.SetStateAction<number | undefined>> | undefined;
   name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
   color: string;
@@ -56,20 +57,22 @@ const CarForm: React.FC<CarFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="carName">
-        Name:
-        <input id="carName" type="text" value={name} onChange={handleNameChange} required />
-      </label>
-      <label htmlFor="carColor">
-        Color:
-        <input id="carColor" type="color" value={color} onChange={handleColorChange} required />
-      </label>
-      {updateMode && carId === undefined && showError && (
-        <p style={{ color: 'red' }}>Please select a car to update.</p>
-      )}
-      <button type="submit">{updateMode ? 'Update Car' : 'Create Car'}</button>
-    </form>
+    <div className="form-container">
+      <form className="car-form" onSubmit={handleSubmit}>
+        <label htmlFor="carName">
+          Name:
+          <input id="carName" type="text" value={name} onChange={handleNameChange} placeholder="TYPE CAR BRAND" required />
+        </label>
+        <label htmlFor="carColor">
+          Color:
+          <input id="carColor" type="color" value={color} onChange={handleColorChange} placeholder="TYPE CAR BRAND" required />
+        </label>
+        {updateMode && carId === undefined && showError && (
+          <p className="error-message">Please select a car to update.</p>
+        )}
+        <button type="submit">{updateMode ? 'Update Car' : 'Create Car'}</button>
+      </form>
+    </div>
   );
 };
 

@@ -1,30 +1,27 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-shadow */
 import React, { useCallback, useEffect, useState } from 'react';
 import { WinnerWithCar } from '../../utils/GlobalInterfaces.ts';
 import CarSVGComponent from '../CarSVG.tsx';
-import Pagination from '../Pagination.tsx';
+import Pagination from '../Pagination/Pagination.tsx';
 import fetchWinners from '../../api/winnerService.ts';
 import useAppContext from '../../context/useAppContext.ts';
+import './winners.css';
 
-// eslint-disable-next-line no-shadow, no-unused-vars
 enum SortField {
-  // eslint-disable-next-line no-unused-vars
   WINS = 'wins',
-  // eslint-disable-next-line no-unused-vars
   TIME = 'time',
 }
 
-// eslint-disable-next-line no-shadow, no-unused-vars
 enum SortOrder {
-  // eslint-disable-next-line no-unused-vars
   ASC = 'ASC',
-  // eslint-disable-next-line no-unused-vars
   DESC = 'DESC',
 }
 
 const Winners: React.FC = () => {
   const [winners, setWinners] = useState<WinnerWithCar[]>([]);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [totalCount, setTotalCount] = useState<number>(0);
   const [sortBy, setSortBy] = useState<SortField>(SortField.WINS);
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.DESC);
 
@@ -39,7 +36,6 @@ const Winners: React.FC = () => {
       .then((data) => {
         setWinners(data.winners);
         setTotalPages(Math.ceil(data.totalCount / 10));
-        setTotalCount(data.totalCount);
       });
   }, []);
 
@@ -69,7 +65,7 @@ const Winners: React.FC = () => {
   };
 
   return (
-    <div className="container">
+    <div className="winner-container">
       <h1>Winners</h1>
       <table>
         <thead>
@@ -77,15 +73,15 @@ const Winners: React.FC = () => {
             <th>№</th>
             <th>Image</th>
             <th>Name</th>
-            <th onClick={() => handleSortBy(SortField.WINS)}>Wins</th>
-            <th onClick={() => handleSortBy(SortField.TIME)}>Best Time (Seconds)</th>
+            <th className="sortable" onClick={() => handleSortBy(SortField.WINS)}>Wins</th>
+            <th className="sortable" onClick={() => handleSortBy(SortField.TIME)}>Best Time (Seconds)</th>
           </tr>
         </thead>
         <tbody>
           {winners.map((winner) => (
             <tr key={winner.id}>
               <td>{winner.id}</td>
-              <CarSVGComponent fill={winner.car.color} />
+              <td className="CarSVGComponent"><CarSVGComponent fill={winner.car.color} /></td>
               <td>{winner.car.name}</td>
               <td>{winner.wins}</td>
               <td>{winner.time}</td>
@@ -93,16 +89,19 @@ const Winners: React.FC = () => {
           ))}
         </tbody>
       </table>
-      <p>
+      <p className="total-winners">
         Total Winners:
-        {totalCount}
+        {' '}
+        {winners.length}
       </p>
-      <Pagination
-        currentPage={winnerPages}
-        totalPages={totalPages}
-        onPreviousPage={handlePreviousPage}
-        onNextPage={handleNextPage}
-      />
+      <div className="pagination">
+        <Pagination
+          currentPage={winnerPages}
+          totalPages={totalPages}
+          onPreviousPage={handlePreviousPage}
+          onNextPage={handleNextPage}
+        />
+      </div>
     </div>
   );
 };

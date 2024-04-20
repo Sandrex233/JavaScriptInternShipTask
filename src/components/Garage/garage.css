@@ -1,0 +1,68 @@
+.garage-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.generate-btn {
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  background-color: #22559c;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.generate-btn:hover {
+  background-color: #1d4172;
+}
+
+.car-form-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.race-controls {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.race-btn {
+  background-color: #f27370;
+}
+
+.reset-btn {
+  background-color: #fa9856;
+}
+
+.race-btn,
+.reset-btn {
+  margin-right: 10px;
+  padding: 10px 20px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.race-btn:hover,
+.reset-btn:hover {
+  background-color: #5585b5;
+}
+
+.car-form-container,
+.race-controls {
+  margin-bottom: 20px;
+}

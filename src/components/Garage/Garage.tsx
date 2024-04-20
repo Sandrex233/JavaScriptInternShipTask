@@ -2,9 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Car } from '../../utils/GlobalInterfaces.ts';
 import CarComponent from './CarComponent.tsx';
 import './Car.css';
-import Pagination from '../Pagination.tsx';
+import Pagination from '../Pagination/Pagination.tsx';
 import { createRandomCars, fetchCars } from '../../api/carService.ts';
-import CarForm from './CarForm.tsx';
+import CarForm from './CarForm/CarForm.tsx';
 import useAppContext from '../../context/useAppContext.ts';
 
 const Garage: React.FC = () => {
@@ -83,37 +83,41 @@ const Garage: React.FC = () => {
   };
 
   return (
-    <div className="container">
+    <div className="garage-container">
       <h2>Garage</h2>
-      <button type="button" onClick={handleGenerateRandomCars}>
+      <button className="generate-btn" type="button" onClick={handleGenerateRandomCars}>
         Generate 100 Random Cars
       </button>
-      <CarForm
-        cars={cars}
-        setCars={setCars}
-        setTotalCount={setTotalCount}
-        updateMode={!updateMode}
-        carId={undefined}
-        setCarId={undefined}
-        name={createCarName}
-        setName={setCreateCarName}
-        color={createCarColor}
-        setColor={setCreateCarColor}
-      />
-      <CarForm
-        cars={cars}
-        setCars={setCars}
-        setTotalCount={setTotalCount}
-        updateMode={updateMode}
-        carId={carId}
-        setCarId={setCarId}
-        name={updateCarName}
-        setName={setUpdateCarName}
-        color={updateCarColor}
-        setColor={setUpdateCarColor}
-      />
-      <button type="button" onClick={startRace}>Race</button>
-      <button type="button" onClick={resetRace}>Reset</button>
+      <div className="car-form-container">
+        <CarForm
+          cars={cars}
+          setCars={setCars}
+          setTotalCount={setTotalCount}
+          updateMode={!updateMode}
+          carId={undefined}
+          setCarId={undefined}
+          name={createCarName}
+          setName={setCreateCarName}
+          color={createCarColor}
+          setColor={setCreateCarColor}
+        />
+        <CarForm
+          cars={cars}
+          setCars={setCars}
+          setTotalCount={setTotalCount}
+          updateMode={updateMode}
+          carId={carId}
+          setCarId={setCarId}
+          name={updateCarName}
+          setName={setUpdateCarName}
+          color={updateCarColor}
+          setColor={setUpdateCarColor}
+        />
+      </div>
+      <div className="race-controls">
+        <button className="race-btn" type="button" onClick={startRace}>Race</button>
+        <button className="reset-btn" type="button" onClick={resetRace}>Reset</button>
+      </div>
       <CarComponent
         cars={cars}
         setCars={setCars}
@@ -124,11 +128,12 @@ const Garage: React.FC = () => {
       />
       <p>
         Total Cars:
+        {' '}
         {totalCount}
       </p>
       <Pagination
         currentPage={garagePages}
-        totalPages={Math.round(totalCount / 7)}
+        totalPages={Math.ceil(totalCount / 7)}
         onPreviousPage={handlePreviousPage}
         onNextPage={handleNextPage}
       />

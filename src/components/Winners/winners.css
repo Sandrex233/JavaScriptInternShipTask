@@ -1,28 +1,54 @@
-.container {
-    margin: 20px;
-  }
-  
-  h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .winners-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .winner-item {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .winner-item strong {
-    font-weight: bold;
-  }
-  
-  .winner-item p {
-    margin: 5px 0;
-  }
-  
+.winner-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+thead {
+  background-color: #f9f9f9;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.CarSVGComponent {
+  display: block;
+  margin: 0 auto;
+}
+
+.pagination {
+  display: flex;
+  /* justify-content: center; */
+  margin-top: 10px;
+}
+
+.pagination button {
+  margin-right: 10px;
+
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.sortable {
+  cursor: pointer;
+  position: relative;
+}

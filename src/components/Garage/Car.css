@@ -35,7 +35,7 @@
 }
 
 .control-button {
-  width: 70px; /* Set the desired width for all buttons */
+  width: 70px;
   margin-right: 10px;
 }
 
@@ -58,15 +58,5 @@ body {
   }
   100% {
     transform: translateX(100%);
-  }
-}
-
-.car-animation {
-  animation: drive 5s linear infinite;
-}
-
-@media screen and (max-width: 500px) {
-  .car-animation {
-    animation-duration: 3s; /* Example duration for smaller screens */
   }
 }

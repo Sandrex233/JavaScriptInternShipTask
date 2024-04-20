@@ -2,7 +2,7 @@ import React, { CSSProperties, useEffect, useState } from 'react';
 import { Car } from '../../utils/GlobalInterfaces.ts';
 import CarSVGComponent from '../CarSVG.tsx';
 import CarControl from './CarControl.tsx';
-import './Car.css';
+import './garage.css';
 import { startEngine, stopEngine, switchToDriveMode } from '../../api/engineService.ts';
 import { createWinner } from '../../api/winnerService.ts';
 import { deleteCar } from '../../api/carService.ts';
