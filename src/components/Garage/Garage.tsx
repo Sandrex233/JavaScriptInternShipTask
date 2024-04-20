@@ -128,13 +128,20 @@ const Garage: React.FC = () => {
         setWinner={setWinner}
       />
       {winner && (
-        <div className="winner-announcement">
-          <p>
-            The winner is:
+      <div className="winner-announcement">
+        <p>
+          Winner:
+          {' '}
+          <span className="winner-name">{winner.car.name}</span>
+          <br />
+          <span className="winner-time">
+            Time:
             {' '}
-            {winner.id}
-          </p>
-        </div>
+            {winner.time}
+            s
+          </span>
+        </p>
+      </div>
       )}
       <p>
         Total Cars:

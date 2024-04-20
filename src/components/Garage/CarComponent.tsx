@@ -4,7 +4,7 @@ import CarSVGComponent from '../CarSVG.tsx';
 import CarControl from './CarControl.tsx';
 import './garage.css';
 import { startEngine, stopEngine, switchToDriveMode } from '../../api/engineService.ts';
-import { createWinner } from '../../api/winnerService.ts';
+import { createWinner, updateWinner } from '../../api/winnerService.ts';
 import { deleteCar, getCar } from '../../api/carService.ts';
 
 interface CarComponentProps {
@@ -44,7 +44,6 @@ const CarComponent: React.FC<CarComponentProps> = ({
 
   useEffect(() => {
     const raceFinished = cars.length === Object.keys(carVelocities).length;
-
     if (raceFinished) {
       let bestCarId: number = 1;
       let bestVelocity: number = 0;
@@ -56,19 +55,25 @@ const CarComponent: React.FC<CarComponentProps> = ({
           bestCarId = cId;
         }
       });
-
       if (raceStarted === false) {
         createWinner({
-          id: bestCarId,
-          wins: 1,
-          time: parseFloat(((distance! / bestVelocity) / 1000).toFixed(2)),
+          id: bestCarId, wins: 1, time: parseFloat(((distance! / bestVelocity) / 1000).toFixed(2)),
         }).then(async (res) => {
-          if (res) {
-            const winnerCar = await getCar(res.id);
-            setWinner({
-              ...res,
-              car: winnerCar,
-            });
+          const winnerCar = await getCar(res.id);
+          setWinner({ ...res, car: winnerCar });
+          setTimeout(() => { setWinner(undefined); }, 5000);
+        }).catch(async (error) => {
+          if (error) {
+            updateWinner({
+              id: bestCarId,
+              wins: 1,
+              time: parseFloat(((distance! / bestVelocity) / 1000).toFixed(2)),
+            })
+              .then(async (res) => {
+                const winnerCar = await getCar(res.id);
+                setWinner({ ...res, car: winnerCar });
+                setTimeout(() => { setWinner(undefined); }, 5000);
+              });
           }
         });
         setCarVelocities({});

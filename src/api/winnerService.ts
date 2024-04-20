@@ -84,9 +84,7 @@ export const createWinner = async (dataParams: Winner): Promise<Winner> => {
     body: JSON.stringify(data),
   });
 
-  if (response.status === 500) {
-    await updateWinner(data);
-  } else if (!response.ok) {
+  if (!response.ok) {
     throw new Error('Failed to create winner');
   }
 
