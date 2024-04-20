@@ -1,10 +1,68 @@
 # JavaScriptInternShipTask
 
+## Current Score: 345
+
 ## UI Deployment
 
-The UI is deployed and can be accessed here: https://async-race-react-ts.netlify.app/.
+The UI is deployed and can be accessed here: https://async-race-react-sandrex233.netlify.app/.
 
-## Current Score: 345
+### Notes
+- Make sure the async-race-api backend server is running before starting the frontend development server to ensure proper communication between the frontend and backend.
+
+
+## Setup and Running
+
+### Prerequisites
+- Node.js 14.x or higher installed on your machine.
+
+### Backend Setup
+
+1. **Clone the async-race-api repository:**
+   ```
+   $ git clone https://github.com/mikhama/async-race-api.git
+   ```
+
+2. Navigate to the downloaded folder:
+    ```
+    $ cd async-race-api
+    ```
+
+3. Install dependencies:
+    ```
+    $ npm install
+    ```
+
+4. Start the server:
+    ```
+    $ npm start
+    ```
+
+5. Access the API:
+    
+    The server will start running at http://127.0.0.1:3000. You can now send requests to this address.
+
+### Frontend Setup
+1. Clone this repository:
+    ```
+    $ git clone https://github.com/Sandrex233/JavaScriptInternShipTask.git
+    ```
+
+2. Navigate to the downloaded folder:
+    ```
+    $ cd JavaScriptInternShipTask
+    ```
+
+3. Install dependencies:
+    ```
+    $ npm install
+    ```
+
+4. Start the frontend development server:
+    ```
+    $ npm run dev
+    ```
+
+
 
 ## Checklist
 
