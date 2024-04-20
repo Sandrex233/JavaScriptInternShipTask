@@ -22,6 +22,7 @@ enum SortOrder {
 const Winners: React.FC = () => {
   const [winners, setWinners] = useState<WinnerWithCar[]>([]);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [totalCount, setTotalCount] = useState<number>(0);
   const [sortBy, setSortBy] = useState<SortField>(SortField.WINS);
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.DESC);
 
@@ -36,6 +37,7 @@ const Winners: React.FC = () => {
       .then((data) => {
         setWinners(data.winners);
         setTotalPages(Math.ceil(data.totalCount / 10));
+        setTotalCount(data.totalCount);
       });
   }, []);
 
@@ -92,7 +94,7 @@ const Winners: React.FC = () => {
       <p className="total-winners">
         Total Winners:
         {' '}
-        {winners.length}
+        {totalCount}
       </p>
       <div className="pagination">
         <Pagination

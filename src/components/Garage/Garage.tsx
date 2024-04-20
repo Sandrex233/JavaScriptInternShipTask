@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Car, WinnerWithCar } from '../../utils/GlobalInterfaces.ts';
-import CarComponent from './CarComponent.tsx';
-import './Car.css';
+import CarComponent from './Car/CarComponent.tsx';
+import './Car/Car.css';
 import Pagination from '../Pagination/Pagination.tsx';
 import { createRandomCars, fetchCars } from '../../api/carService.ts';
 import CarForm from './CarForm/CarForm.tsx';

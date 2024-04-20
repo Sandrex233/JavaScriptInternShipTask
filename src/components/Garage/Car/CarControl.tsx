@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import './Car.css';
-import { CarStatus } from '../../utils/GlobalInterfaces.ts';
+import { CarStatus } from '../../../utils/GlobalInterfaces.ts';
 
 type CarControlProps = {
   onStartEngine: () => void;

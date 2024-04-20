@@ -1,11 +1,13 @@
-import React, { CSSProperties, useEffect, useState } from 'react';
-import { Car, WinnerWithCar } from '../../utils/GlobalInterfaces.ts';
-import CarSVGComponent from '../CarSVG.tsx';
+import React, {
+  CSSProperties, useEffect, useState,
+} from 'react';
+import { Car, WinnerWithCar } from '../../../utils/GlobalInterfaces.ts';
+import CarSVGComponent from '../../CarSVG.tsx';
 import CarControl from './CarControl.tsx';
-import './garage.css';
-import { startEngine, stopEngine, switchToDriveMode } from '../../api/engineService.ts';
-import { createWinner, updateWinner } from '../../api/winnerService.ts';
-import { deleteCar, getCar } from '../../api/carService.ts';
+import '../garage.css';
+import { startEngine, stopEngine, switchToDriveMode } from '../../../api/engineService.ts';
+import { createWinner, updateWinner } from '../../../api/winnerService.ts';
+import { deleteCar, getCar } from '../../../api/carService.ts';
 
 interface CarComponentProps {
   cars: Car[];
@@ -80,6 +82,13 @@ const CarComponent: React.FC<CarComponentProps> = ({
       }
     }
   }, [raceStarted, cars, carVelocities, distance, setWinner]);
+
+  useEffect(() => {
+    const screenWidth = window.innerWidth;
+    const animationDistance = screenWidth > 1000 ? 855 : screenWidth - 180;
+    const root = document.documentElement;
+    root.style.setProperty('--animation-distance', `${animationDistance}px`);
+  }, []);
 
   const handleStopEngine = async (carId: number) => {
     await stopEngine(carId);
