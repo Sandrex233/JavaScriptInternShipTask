@@ -2,7 +2,9 @@
 
 Async Race is a thrilling game where the car with the highest velocity wins. Players can select their cars and watch them race against each other, with the fastest car reaching the finish line first and emerging victorious. 
 
-## Current Score: 360 +- 35
+### Current Score: 370 + [0 - 35]? discretionary points, waiting for reviewer
+
+
 
 ## UI Deployment
 
@@ -108,7 +110,7 @@ The UI is deployed and can be accessed here: https://async-race-react-sandrex233
 
 - [x] **Engine Control Buttons (10 points):** Place start/stop engine buttons near each car's image.
 - [x] **Start Engine Animation (20 points):** User clicks to the engine start button -> UI is waiting for car's velocity answer -> animate the car and makes another request to drive. In case api returned 500 error car animation should be stopped.
-- [ ] **Stop Engine Animation (10 points):** User clicks to the engine stop button -> UI is waiting for answer for stopping engine -> car returned to it's initial place.
+- [x] **Stop Engine Animation (10 points):** User clicks to the engine stop button -> UI is waiting for answer for stopping engine -> car returned to it's initial place.
 - [x] **Button States (5 points):** Start engine button should be disabled in case car is already in driving mode. As well as stop engine button should be disabled when car is on it's initial place.
 - [x] **Responsive Animation (5 points):** Ensure car animations are fluid and responsive on screens as small as 500px.
 
@@ -157,4 +159,4 @@ The UI is deployed and can be accessed here: https://async-race-react-sandrex233
 
 ## 🌟 Overall Code Quality (35 points)
 
-- [ ] **(Up to 35 points)** Discretionary points awarded by the reviewer based on overall code quality, readability
+- [?] **(Up to 35 points)** Discretionary points awarded by the reviewer based on overall code quality, readability
