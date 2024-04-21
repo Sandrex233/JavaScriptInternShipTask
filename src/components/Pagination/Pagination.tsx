@@ -9,7 +9,10 @@ interface PaginationProps {
 }
 
 const Pagination: React.FC<PaginationProps> = ({
-  currentPage, totalPages, onPreviousPage, onNextPage,
+  currentPage,
+  totalPages,
+  onPreviousPage,
+  onNextPage,
 }) => (
   <div className="pagination-container">
     <button

@@ -8,12 +8,15 @@ export default async function fetchWinners(
   sort: string,
   order: string,
 ): Promise<{ winners: WinnerWithCar[]; totalCount: number }> {
-  const response = await fetch(`${BASE_URL}/winners?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
+  const response = await fetch(
+    `${BASE_URL}/winners?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     },
-  });
+  );
   if (!response.ok) {
     throw new Error('Failed to fetch winners');
   }
@@ -53,7 +56,10 @@ export const getWinner = async (winnerId: number): Promise<Winner> => {
 
 export const updateWinner = async (dataParams: Winner): Promise<Winner> => {
   const winnerData: Winner = await getWinner(dataParams.id);
-  let dataDTO: {wins: number, time: number } = { wins: winnerData.wins + 1, time: winnerData.time };
+  let dataDTO: { wins: number; time: number } = {
+    wins: winnerData.wins + 1,
+    time: winnerData.time,
+  };
   if (winnerData.time > dataParams.time) {
     dataDTO = { wins: winnerData.wins + 1, time: dataParams.time };
   }

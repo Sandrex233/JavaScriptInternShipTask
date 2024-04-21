@@ -1,45 +1,33 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-shadow */
 import React, { useCallback, useEffect, useState } from 'react';
-import { WinnerWithCar } from '../../utils/GlobalInterfaces.ts';
+import { SortField, SortOrder, WinnerWithCar } from '../../utils/GlobalInterfaces.ts';
 import CarSVGComponent from '../CarSVG.tsx';
 import Pagination from '../Pagination/Pagination.tsx';
 import fetchWinners from '../../api/winnerService.ts';
 import useAppContext from '../../context/useAppContext.ts';
 import './winners.css';
 
-enum SortField {
-  WINS = 'wins',
-  TIME = 'time',
-}
-
-enum SortOrder {
-  ASC = 'ASC',
-  DESC = 'DESC',
-}
-
 const Winners: React.FC = () => {
   const [winners, setWinners] = useState<WinnerWithCar[]>([]);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [totalCount, setTotalCount] = useState<number>(0);
-  const [sortBy, setSortBy] = useState<SortField>(SortField.WINS);
-  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.DESC);
 
-  const { winnerPages, setwinnerPages } = useAppContext();
+  const {
+    sortBy, setSortBy,
+    sortOrder, setSortOrder,
+    winnerPages, setwinnerPages,
+  } = useAppContext();
 
-  const fetchWinnersCallback = useCallback(async (
-    cPage: number,
-    cSortBy: string,
-    cSortOrder: string,
-  ) => {
-    fetchWinners(cPage, 10, cSortBy, cSortOrder)
-      .then((data) => {
+  const fetchWinnersCallback = useCallback(
+    async (cPage: number, cSortBy: string, cSortOrder: string) => {
+      fetchWinners(cPage, 10, cSortBy, cSortOrder).then((data) => {
         setWinners(data.winners);
         setTotalPages(Math.ceil(data.totalCount / 10));
         setTotalCount(data.totalCount);
       });
-  }, []);
+    },
+    [],
+  );
 
   useEffect(() => {
     fetchWinnersCallback(winnerPages, sortBy, sortOrder);
@@ -47,7 +35,9 @@ const Winners: React.FC = () => {
 
   const handleSortBy = (field: SortField): void => {
     if (field === sortBy) {
-      setSortOrder(sortOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC);
+      setSortOrder(
+        sortOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC,
+      );
     } else {
       setSortBy(field);
       setSortOrder(SortOrder.DESC);
@@ -75,15 +65,27 @@ const Winners: React.FC = () => {
             <th>№</th>
             <th>Image</th>
             <th>Name</th>
-            <th className="sortable" onClick={() => handleSortBy(SortField.WINS)}>Wins</th>
-            <th className="sortable" onClick={() => handleSortBy(SortField.TIME)}>Best Time (Seconds)</th>
+            <th
+              className="sortable"
+              onClick={() => handleSortBy(SortField.WINS)}
+            >
+              Wins
+            </th>
+            <th
+              className="sortable"
+              onClick={() => handleSortBy(SortField.TIME)}
+            >
+              Best Time (Seconds)
+            </th>
           </tr>
         </thead>
         <tbody>
           {winners.map((winner) => (
             <tr key={winner.id}>
               <td>{winner.id}</td>
-              <td className="CarSVGComponent"><CarSVGComponent fill={winner.car.color} /></td>
+              <td className="CarSVGComponent">
+                <CarSVGComponent fill={winner.car.color} />
+              </td>
               <td>{winner.car.name}</td>
               <td>{winner.wins}</td>
               <td>{winner.time}</td>
@@ -93,7 +95,6 @@ const Winners: React.FC = () => {
       </table>
       <p className="total-winners">
         Total Winners:
-        {' '}
         {totalCount}
       </p>
       <div className="pagination">

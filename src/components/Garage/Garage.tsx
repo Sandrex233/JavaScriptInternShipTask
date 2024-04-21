@@ -6,28 +6,37 @@ import Pagination from '../Pagination/Pagination.tsx';
 import { createRandomCars, fetchCars } from '../../api/carService.ts';
 import CarForm from './CarForm/CarForm.tsx';
 import useAppContext from '../../context/useAppContext.ts';
+import WinnerAnnouncement from './WinnerAnnouncement.tsx';
 
 const Garage: React.FC = () => {
   const [cars, setCars] = useState<Car[]>([]);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [carId, setCarId] = useState<number | undefined>();
-  const [raceStarted, setRaceStarted] = useState<boolean | undefined>(undefined);
+  const [raceStarted, setRaceStarted] = useState<boolean | undefined>(
+    undefined,
+  );
   const [winner, setWinner] = useState<WinnerWithCar>();
   const updateMode: boolean = true;
 
   const {
-    garagePages, setGaragePages,
-    createCarName, setCreateCarName,
-    createCarColor, setCreateCarColor,
-    updateCarName, setUpdateCarName,
-    updateCarColor, setUpdateCarColor,
+    garagePages,
+    setGaragePages,
+    createCarName,
+    setCreateCarName,
+    createCarColor,
+    setCreateCarColor,
+    updateCarName,
+    setUpdateCarName,
+    updateCarColor,
+    setUpdateCarColor,
   } = useAppContext();
 
   const fetchCarsCallback = useCallback(async (cPage: number) => {
-    fetchCars(cPage, 7).then((fetchedCars) => {
-      setCars(fetchedCars.cars);
-      setTotalCount(fetchedCars.totalCount);
-    })
+    fetchCars(cPage, 7)
+      .then((fetchedCars) => {
+        setCars(fetchedCars.cars);
+        setTotalCount(fetchedCars.totalCount);
+      })
       .catch((error) => {
         throw error;
       });
@@ -86,7 +95,11 @@ const Garage: React.FC = () => {
   return (
     <div className="garage-container">
       <h2>Garage</h2>
-      <button className="generate-btn" type="button" onClick={handleGenerateRandomCars}>
+      <button
+        className="generate-btn"
+        type="button"
+        onClick={handleGenerateRandomCars}
+      >
         Generate 100 Random Cars
       </button>
       <div className="car-form-container">
@@ -116,8 +129,12 @@ const Garage: React.FC = () => {
         />
       </div>
       <div className="race-controls">
-        <button className="race-btn" type="button" onClick={startRace}>Race</button>
-        <button className="reset-btn" type="button" onClick={resetRace}>Reset</button>
+        <button className="race-btn" type="button" onClick={startRace}>
+          Race
+        </button>
+        <button className="reset-btn" type="button" onClick={resetRace}>
+          Reset
+        </button>
       </div>
       <CarComponent
         cars={cars}
@@ -127,22 +144,7 @@ const Garage: React.FC = () => {
         raceStarted={raceStarted}
         setWinner={setWinner}
       />
-      {winner && (
-      <div className="winner-announcement">
-        <p>
-          Winner:
-          {' '}
-          <span className="winner-name">{winner.car.name}</span>
-          <br />
-          <span className="winner-time">
-            Time:
-            {' '}
-            {winner.time}
-            s
-          </span>
-        </p>
-      </div>
-      )}
+      {winner && <WinnerAnnouncement winner={winner} />}
       <p>
         Total Cars:
         {' '}

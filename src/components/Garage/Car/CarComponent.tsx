@@ -92,6 +92,10 @@ const CarComponent: React.FC<CarComponentProps> = ({
 
   const handleStopEngine = async (carId: number) => {
     await stopEngine(carId);
+    setCarVelocities((prevVelocities) => ({
+      ...prevVelocities,
+      [carId]: 0,
+    }));
   };
 
   const handleSwitchToDriveMode = async (carId: number) => {
@@ -113,9 +117,10 @@ const CarComponent: React.FC<CarComponentProps> = ({
     <ul className="car">
       {cars.map((car) => {
         const animationDuration: string | false = car.id !== undefined && `${1000 / carVelocities[car.id]}s`;
-        const animationStyle: CSSProperties = animationDuration && raceStarted ? {
-          animation: `drive ${animationDuration && animationDuration} linear forwards`,
-        } : {};
+        const animationStyle: CSSProperties = (animationDuration && raceStarted)
+         || carVelocities[car.id!] > 0 ? {
+            animation: `drive ${animationDuration && animationDuration} linear forwards`,
+          } : {};
         return (
           <li key={car.id} className="car-item">
             <div className="car-details">
@@ -141,9 +146,16 @@ const CarComponent: React.FC<CarComponentProps> = ({
                 >
                   <CarSVGComponent fill={car.color} />
                 </div>
-                <strong>{car.name.toUpperCase()}</strong>
+                <i>{car.name.toUpperCase()}</i>
               </div>
             </div>
+            {carVelocities[car.id!] > 0 && (
+            <i>
+              Speed:
+              {' '}
+              {carVelocities[car.id!]}
+            </i>
+            )}
           </li>
         );
       })}

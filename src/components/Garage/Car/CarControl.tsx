@@ -52,8 +52,20 @@ const CarControl: React.FC<CarControlProps> = ({
 
   return (
     <div className="buttons">
-      <button type="button" onClick={handleStartEngine} disabled={status === CarStatus.Drive || status === CarStatus.Started}>A</button>
-      <button type="button" onClick={handleStopEngine} disabled={status === CarStatus.Stopped}>B</button>
+      <button
+        type="button"
+        onClick={handleStartEngine}
+        disabled={status === CarStatus.Drive || status === CarStatus.Started}
+      >
+        A
+      </button>
+      <button
+        type="button"
+        onClick={handleStopEngine}
+        disabled={status === CarStatus.Stopped}
+      >
+        B
+      </button>
     </div>
   );
 };

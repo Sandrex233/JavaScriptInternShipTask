@@ -9,7 +9,9 @@ interface CarFormProps {
   setTotalCount: React.Dispatch<React.SetStateAction<number>>;
   updateMode: boolean;
   carId: number | undefined;
-  setCarId: React.Dispatch<React.SetStateAction<number | undefined>> | undefined;
+  setCarId:
+    | React.Dispatch<React.SetStateAction<number | undefined>>
+    | undefined;
   name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
   color: string;
@@ -17,7 +19,16 @@ interface CarFormProps {
 }
 
 const CarForm: React.FC<CarFormProps> = ({
-  cars, setCars, setTotalCount, updateMode, carId, setCarId, name, setName, color, setColor,
+  cars,
+  setCars,
+  setTotalCount,
+  updateMode,
+  carId,
+  setCarId,
+  name,
+  setName,
+  color,
+  setColor,
 }) => {
   const [showError, setShowError] = useState<boolean>(false);
 
@@ -61,16 +72,32 @@ const CarForm: React.FC<CarFormProps> = ({
       <form className="car-form" onSubmit={handleSubmit}>
         <label htmlFor="carName">
           Name:
-          <input id="carName" type="text" value={name} onChange={handleNameChange} placeholder="TYPE CAR BRAND" required />
+          <input
+            id="carName"
+            type="text"
+            value={name}
+            onChange={handleNameChange}
+            placeholder="TYPE CAR BRAND"
+            required
+          />
         </label>
         <label htmlFor="carColor">
           Color:
-          <input id="carColor" type="color" value={color} onChange={handleColorChange} placeholder="TYPE CAR BRAND" required />
+          <input
+            id="carColor"
+            type="color"
+            value={color}
+            onChange={handleColorChange}
+            placeholder="TYPE CAR BRAND"
+            required
+          />
         </label>
         {updateMode && carId === undefined && showError && (
           <p className="error-message">Please select a car to update.</p>
         )}
-        <button type="submit">{updateMode ? 'Update Car' : 'Create Car'}</button>
+        <button type="submit">
+          {updateMode ? 'Update Car' : 'Create Car'}
+        </button>
       </form>
     </div>
   );

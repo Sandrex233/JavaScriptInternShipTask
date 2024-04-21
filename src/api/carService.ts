@@ -66,7 +66,10 @@ export const createCar = async (name: string, color: string): Promise<Car> => {
   return response.json();
 };
 
-export const updateCar = async (id: number, updatedCar: Car): Promise<Car | Error> => {
+export const updateCar = async (
+  id: number,
+  updatedCar: Car,
+): Promise<Car | Error> => {
   try {
     const response = await fetch(`${BASE_URL}/garage/${id}`, {
       method: 'PUT',

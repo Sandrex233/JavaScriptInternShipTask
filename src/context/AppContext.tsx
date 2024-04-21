@@ -1,6 +1,5 @@
-import React, {
-  useState, useMemo, ReactNode,
-} from 'react';
+import React, { useState, useMemo, ReactNode } from 'react';
+import { SortField, SortOrder } from '../utils/GlobalInterfaces.ts';
 
 interface AppContextType {
   garagePages: number;
@@ -15,9 +14,15 @@ interface AppContextType {
   setUpdateCarName: React.Dispatch<React.SetStateAction<string>>;
   updateCarColor: string;
   setUpdateCarColor: React.Dispatch<React.SetStateAction<string>>;
+  sortBy: SortField,
+  setSortBy: React.Dispatch<React.SetStateAction<SortField>>,
+  sortOrder: SortOrder,
+  setSortOrder: React.Dispatch<React.SetStateAction<SortOrder>>,
 }
 
-export const AppContext = React.createContext<AppContextType | undefined>(undefined);
+export const AppContext = React.createContext<AppContextType | undefined>(
+  undefined,
+);
 
 interface AppProviderProps {
   children: ReactNode;
@@ -30,6 +35,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [createCarColor, setCreateCarColor] = useState<string>('#000000');
   const [updateCarName, setUpdateCarName] = useState<string>('');
   const [updateCarColor, setUpdateCarColor] = useState<string>('#000000');
+  const [sortBy, setSortBy] = useState<SortField>(SortField.WINS);
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.DESC);
 
   const contextValue = useMemo(
     () => ({
@@ -45,6 +52,10 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       setUpdateCarName,
       updateCarColor,
       setUpdateCarColor,
+      sortBy,
+      setSortBy,
+      sortOrder,
+      setSortOrder,
     }),
     [
       garagePages,
@@ -59,8 +70,14 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       setUpdateCarName,
       updateCarColor,
       setUpdateCarColor,
+      sortBy,
+      setSortBy,
+      sortOrder,
+      setSortOrder,
     ],
   );
 
-  return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;
+  return (
+    <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>
+  );
 };

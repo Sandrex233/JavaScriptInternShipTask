@@ -29,3 +29,19 @@ export enum CarStatus {
   // eslint-disable-next-line no-unused-vars
   Drive,
 }
+
+// eslint-disable-next-line no-shadow
+export enum SortField {
+  // eslint-disable-next-line no-unused-vars
+  WINS = 'wins',
+  // eslint-disable-next-line no-unused-vars
+  TIME = 'time',
+}
+
+// eslint-disable-next-line no-shadow
+export enum SortOrder {
+  // eslint-disable-next-line no-unused-vars
+  ASC = 'ASC',
+  // eslint-disable-next-line no-unused-vars
+  DESC = 'DESC',
+}

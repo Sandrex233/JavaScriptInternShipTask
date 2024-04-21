@@ -21,6 +21,11 @@
 .car-info {
   display: flex;
   align-items: center;
+  margin-left: 1rem;
+}
+
+.car-info > * + *	{
+  margin-left: 0.625rem; 
 }
 
 .car-controls {
