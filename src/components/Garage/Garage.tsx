@@ -82,14 +82,13 @@ const Garage: React.FC = () => {
   const startRace = () => {
     if (raceStarted === false || raceStarted === undefined) {
       setRaceStarted(true);
-      setTimeout(() => {
-        setRaceStarted(false);
-      }, 10000);
     }
   };
 
   const resetRace = () => {
-    if (raceStarted === true || raceStarted !== undefined) setRaceStarted(false);
+    if (raceStarted === true || raceStarted !== undefined) {
+      setRaceStarted(false);
+    }
   };
 
   return (
@@ -144,7 +143,7 @@ const Garage: React.FC = () => {
         raceStarted={raceStarted}
         setWinner={setWinner}
       />
-      {winner && <WinnerAnnouncement winner={winner} />}
+      {winner ? <WinnerAnnouncement winner={winner} /> : ''}
       <p>
         Total Cars:
         {' '}

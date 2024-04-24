@@ -26,16 +26,11 @@ const CarComponent: React.FC<CarComponentProps> = ({
   raceStarted,
   setWinner,
 }) => {
-  // let carValues: {[key: number]: number} = {};
   const [carVelocities, setCarVelocities] = useState<{ [key: number]: number }>({});
   const [distance, setDistance] = useState<number>();
 
   const handleStartEngine = async (carId: number) => {
     await startEngine(carId).then((res) => {
-      // carValues = {
-      //   ...carValues,
-      //   [carId]: res.velocity,
-      // };
       setCarVelocities((prevVelocities) => ({
         ...prevVelocities,
         [carId]: res.velocity,
@@ -57,27 +52,31 @@ const CarComponent: React.FC<CarComponentProps> = ({
           bestCarId = cId;
         }
       });
-      if (raceStarted === false) {
-        createWinner({
-          id: bestCarId, wins: 1, time: parseFloat(((distance! / bestVelocity) / 1000).toFixed(2)),
-        }).then(async (res) => {
-          const winnerCar = await getCar(res.id);
-          setWinner({ ...res, car: winnerCar });
-          setTimeout(() => { setWinner(undefined); }, 5000);
-        }).catch(async (error) => {
-          if (error) {
-            updateWinner({
-              id: bestCarId,
-              wins: 1,
-              time: parseFloat(((distance! / bestVelocity) / 1000).toFixed(2)),
-            })
-              .then(async (res) => {
-                const winnerCar = await getCar(res.id);
-                setWinner({ ...res, car: winnerCar });
-                setTimeout(() => { setWinner(undefined); }, 5000);
-              });
-          }
-        });
+      if (raceStarted) {
+        setTimeout(() => {
+          createWinner({
+            id: bestCarId,
+            wins: 1,
+            time: parseFloat(((distance! / bestVelocity) / 1000).toFixed(2)),
+          }).then(async (res) => {
+            const winnerCar = await getCar(res.id);
+            setWinner({ ...res, car: winnerCar });
+            setTimeout(() => { setWinner(undefined); }, 5000);
+          }).catch(async (error) => {
+            if (error) {
+              updateWinner({
+                id: bestCarId,
+                wins: 1,
+                time: parseFloat(((distance! / bestVelocity) / 1000).toFixed(2)),
+              })
+                .then(async (res) => {
+                  const winnerCar = await getCar(res.id);
+                  setWinner({ ...res, car: winnerCar });
+                  setTimeout(() => { setWinner(undefined); }, 5000);
+                });
+            }
+          });
+        }, 10000);
         setCarVelocities({});
       }
     }
