@@ -76,8 +76,8 @@ const CarComponent: React.FC<CarComponentProps> = ({
                 });
             }
           });
+          setCarVelocities({});
         }, 10000);
-        setCarVelocities({});
       }
     }
   }, [raceStarted, cars, carVelocities, distance, setWinner]);
