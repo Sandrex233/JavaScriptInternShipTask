@@ -2,7 +2,7 @@
 
 Async Race is a thrilling game where the car with the highest velocity wins. Players can select their cars and watch them race against each other, with the fastest car reaching the finish line first and emerging victorious. 
 
-### Current Score: 370 + [0 - 35]? discretionary points, waiting for reviewer
+### Total score is 390
 
 
 
